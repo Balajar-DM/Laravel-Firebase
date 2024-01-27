@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SendMessages;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/setToken', [SendMessages::class, 'setToken'])->name('firebase.token');
+
+Route::get('/messages', [SendMessages::class, 'index'])->name('form.pesan');
+
+Route::post('/store', [SendMessages::class, 'sending'])->name('send.pesan');
