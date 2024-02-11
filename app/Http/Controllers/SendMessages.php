@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Kreait\Firebase\Messaging\CloudMessage;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SendMessages extends Controller
 {
+
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
 
     public function index()
     {
         return view('form');
     }
 
-    public function sending()
+    public function saveToken(Request $request)
     {
-        $topic = 'a-topic';
-        $notification = ['title' => 'Notification title', 'body' => 'Notification body'];
+        // auth()->user()->update(['device_token' => $request->token]);
+        User::where('id', Auth::user()->id)
+            ->update([
+                'device_token' => $request->token
+            ]);
+        return response()->json(['token saved succesfuly']);
+    }
 
-        $message = CloudMessage::withTarget('topic', $topic)
-            ->withNotification($notification) // optional
-        ;
-
-        $messaging->send($message);
+    public function sendNotification(Request $request)
+    {
     }
 }

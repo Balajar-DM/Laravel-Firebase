@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotifController;
 use App\Http\Controllers\SendMessages;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/setToken', [SendMessages::class, 'setToken'])->name('firebase.token');
+Route::get('/form', [SendMessages::class, 'index'])->name('data');
 
-Route::get('/messages', [SendMessages::class, 'index'])->name('form.pesan');
+Route::post('/save-token', [SendMessages::class, 'saveToken'])->name('save.token');
 
-Route::post('/store', [SendMessages::class, 'sending'])->name('send.pesan');
+Route::post('/send-notification', [SendMessages::class, 'sendNotification'])->name('send.notification');
+
+Route::post('/notifsending', [NotifController::class, 'index'])->name('notif.send');
